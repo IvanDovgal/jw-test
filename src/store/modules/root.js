@@ -1,4 +1,4 @@
-const module = {
+const definition = {
   mutations: {
     increment(state) {
       state.count += 5
@@ -13,6 +13,6 @@ export default function root(state = {
 }) {
   return {
     state,
-    ...module
+    ...definition
   }
 }

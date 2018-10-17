@@ -1,4 +1,4 @@
-const module = {
+const definition = {
   namespaced: true,
   mutations: {
     increment(state) {
@@ -14,6 +14,6 @@ export default function bookshelf(state = {
 }) {
   return {
     state,
-    ...module
+    ...definition
   }
 }
