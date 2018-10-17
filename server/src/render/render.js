@@ -1,7 +1,5 @@
-import Vue from 'vue'
-import  { createRenderer } from 'vue-server-renderer'
+import { createRenderer } from 'vue-server-renderer';
 import template from './index.template.html';
-import App from '../../../src/components/App.vue'
 import { createApp } from '../../../src';
 
 const renderer = createRenderer({
@@ -9,12 +7,17 @@ const renderer = createRenderer({
 });
 
 export async function render(req, res) {
-  const { app, store } = createApp({
-    url: req.url
-  })
-  const html = await renderer.renderToString(app, {
-    title: 'Test',
-    state: store.state
-  });
-  res.send(html);
+  try {
+    const { app, store } = await createApp({
+      url: req.url
+    });
+    const html = await renderer.renderToString(app, {
+      title: 'Test', state: store.state
+    });
+    res.send(html);
+  } catch (e) {
+    if(e.code !== 404)
+      return res.send(template);
+    res.status(404).send('Not found!')
+  }
 }

@@ -1,7 +1,7 @@
 import { createApp } from '../src';
 
-function startApp(createApp, state = null) {
-  const { app, store } = createApp({
+async function startApp(createApp, state = null) {
+  const { app, store } = await createApp({
     url: window.location.pathname,
     state
   });
