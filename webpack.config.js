@@ -60,7 +60,13 @@ const clientConfig = {
     filename: './app.js'
   },
   plugins: [
-    ...sharedPlugins
+    ...sharedPlugins,
+    new webpack.DefinePlugin({
+      ENV: JSON.stringify('client'),
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
+    })
   ],
   module: {
     rules: [
@@ -80,6 +86,12 @@ const serverConfig = {
   },
   plugins: [
     ...sharedPlugins,
+    new webpack.DefinePlugin({
+      ENV: JSON.stringify('server'),
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
+    }),
     new CopyWebpackPlugin([
       './package.json',
       { from: './server/index.js', to: 'server.js' }

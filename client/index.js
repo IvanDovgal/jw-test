@@ -1,16 +1,16 @@
 import { createApp } from '../src';
 
-function startApp(createApp) {
-  const { app } = createApp({
-    url: window.location.pathname
+function startApp(createApp, state = null) {
+  const { app, store } = createApp({
+    url: window.location.pathname,
+    state
   });
 
   app.$mount('#app');
 }
 
-startApp(createApp);
+startApp(createApp, window.__INITIAL_STATE__);
 if (module.hot) module.hot.accept('../src', function () {
-  console.log('update')
   const { createApp } = require('../src');
   startApp(createApp);
 });

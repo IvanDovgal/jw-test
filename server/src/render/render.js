@@ -9,11 +9,12 @@ const renderer = createRenderer({
 });
 
 export async function render(req, res) {
-  const { app } = createApp({
+  const { app, store } = createApp({
     url: req.url
   })
   const html = await renderer.renderToString(app, {
-    title: 'Test'
+    title: 'Test',
+    state: store.state
   });
   res.send(html);
 }

@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vue-server-renderer": "^2.5.17",

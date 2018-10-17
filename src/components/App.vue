@@ -1,12 +1,20 @@
 <template>
-  <p>{{ greeting }} World!</p>
+  <div>
+    <p>{{ count }} asd</p>
+    <button v-on:click="increment">press-x</button>
+  </div>
 </template>
 
 <script>
 export default {
-  data: function () {
-    return {
-      greeting: 'Hello'
+  computed: {
+    count() {
+      return this.$store.state.count;
+    }
+  },
+  methods: {
+    increment() {
+      this.$store.commit('increment')
     }
   }
 }
@@ -14,7 +22,7 @@ export default {
 
 <style scoped>
 p {
-  font-size: 2em;
+  font-size: 1em;
   text-align: center;
 }
 </style>
