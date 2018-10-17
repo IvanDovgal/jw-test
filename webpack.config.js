@@ -12,6 +12,11 @@ const modePlugins = {
   ]
 }
 
+const devtool = {
+  production: 'source-map',
+  development: 'inline-source-map'
+}
+
 const sharedRules =
   [
     {
@@ -72,7 +77,8 @@ const clientConfig = {
     rules: [
       ...sharedRules
     ]
-  }
+  },
+  devtool: devtool[mode]
 };
 
 const serverConfig = {
@@ -106,7 +112,8 @@ const serverConfig = {
     rules: [
       ...sharedRules
     ]
-  }
+  },
+  devtool: devtool[mode]
 };
 
 module.exports = [serverConfig, clientConfig];

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "serve": "node ./tools/devServer.js",
+    "serve": "node $NODE_DEBUG_OPTION ./tools/devServer.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
