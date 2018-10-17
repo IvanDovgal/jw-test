@@ -1,4 +1,4 @@
-const application = require('./app')({});
+const application = require('./app').default({});
 const express = require('express');
 
 const app = express();
