@@ -4,7 +4,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const nodeExternals = require('webpack-node-externals');
 
-const mode = 'development'
+const mode = process.env.MODE || 'development'
 
 const modePlugins = {
   development: [
