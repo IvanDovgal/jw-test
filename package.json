@@ -7,7 +7,7 @@
     "build": "webpack",
     "start": "node $NODE_DEBUG_OPTION ./tools/devServer.js",
     "test": "jest",
-    "lint": "eslint --ext .js client/ server/ src/ tools/",
+    "lint": "eslint --ext .js,.vue client/ server/ src/ tools/",
     "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
@@ -53,6 +53,7 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "axios": "^0.18.0",
+    "eslint-plugin-vue": "^5.0.0-beta.3",
     "express": "^4.16.4",
     "express-http-proxy": "^1.4.0",
     "lodash": "^4.17.11",
