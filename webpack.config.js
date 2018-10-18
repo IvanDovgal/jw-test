@@ -20,6 +20,11 @@ const devtool = {
 const sharedRules =
   [
     {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: "babel-loader"
+    },
+    {
       test: /\.html$/,
       use: [
         {
