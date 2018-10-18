@@ -62,4 +62,4 @@ typings/
 
 # webpack dist
 dist/
-jest_rc/
+jest_rs/
