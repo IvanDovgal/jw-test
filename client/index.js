@@ -1,16 +1,20 @@
-import { createApp } from '../src';
+/* eslint-env browser */
+import { createApp as initialCreateApp } from '../src';
 
 async function startApp(createApp, state = null) {
-  const { app, store } = await createApp({
+  const { app } = await createApp({
     url: window.location.pathname,
-    state
+    state,
   });
 
   app.$mount('#app');
 }
 
-startApp(createApp, window.__INITIAL_STATE__);
-if (module.hot) module.hot.accept('../src', function () {
-  const { createApp } = require('../src');
-  startApp(createApp);
-});
+// eslint-disable-next-line no-undef,no-underscore-dangle
+startApp(initialCreateApp, window.__INITIAL_STATE__);
+if (module.hot) {
+  module.hot.accept('../src', () => {
+    const { createApp } = require('../src'); // eslint-disable-line global-require
+    startApp(createApp);
+  });
+}

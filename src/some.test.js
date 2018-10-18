@@ -1,7 +1,7 @@
-import { createApp } from './index';
+/* eslint-env jest */
 
-describe('First test', function () {
+describe('First test', () => {
   it('val', () => {
-    expect(5).toBe(5)
-  })
+    expect(5).toBe(5);
+  });
 });

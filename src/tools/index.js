@@ -1,1 +1,2 @@
-export { default as httpClient } from './httpClient'
+// eslint-disable-next-line import/prefer-default-export
+export { default as httpClient } from './httpClient';

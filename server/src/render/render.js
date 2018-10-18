@@ -3,21 +3,23 @@ import template from './index.template.html';
 import { createApp } from '../../../src';
 
 const renderer = createRenderer({
-  template
+  template,
 });
 
-export async function render(req, res) {
+export default async function (req, res) {
   try {
     const { app, store } = await createApp({
-      url: req.url
+      url: req.url,
     });
     const html = await renderer.renderToString(app, {
-      title: 'Test', state: store.state
+      title: 'Test', state: store.state,
     });
     res.send(html);
   } catch (e) {
-    if(e.code !== 404)
-      return res.send(template);
-    res.status(404).send('Not found!')
+    if (e.code !== 404) {
+      res.send(template);
+      return;
+    }
+    res.status(404).send('Not found!');
   }
 }

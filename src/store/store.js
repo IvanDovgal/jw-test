@@ -1,22 +1,21 @@
 const Vuex = require('vuex');
-const Vue = require('vue');
-const mapValues = require('lodash/mapValues')
+const mapValues = require('lodash/mapValues');
 
-const createConfig = ({ root, ...modules }, states = {}) => {
-  return {
-    ...root(),
-    modules: mapValues(modules, (module, name) => module(states[name]))
-  };
-}
+const createConfig = ({ root, ...modules }, states = {}) => ({
+  ...root(),
+  modules: mapValues(modules, (module, name) => module(states[name])),
+});
 
+// eslint-disable-next-line import/no-mutable-exports,import/prefer-default-export
 export let createStore;
 
-const internalCreateStore = (modules, context) => new Vuex.Store(createConfig(modules));
+const internalCreateStore = modules => new Vuex.Store(createConfig(modules));
 
+/* eslint-disable global-require */
 if (process.env.NODE_ENV === 'development') {
   if (ENV === 'server') {
     let useModules = require('./modules');
-    createStore = (context) => internalCreateStore(useModules, context);
+    createStore = context => internalCreateStore(useModules, context);
     if (module.hot) {
       module.hot.accept('./modules', () => {
         useModules = require('./modules');
@@ -26,16 +25,17 @@ if (process.env.NODE_ENV === 'development') {
 
   if (ENV === 'client') {
     let store = null;
-    createStore = (context) => store ? store : store = internalCreateStore(require('./modules'), context);
+    // eslint-disable-next-line no-return-assign
+    createStore = context => (store || (store = internalCreateStore(require('./modules'), context)));
     if (module.hot) {
       module.hot.accept('./modules', () => {
         const config = createConfig(require('./modules'));
         store.hotUpdate(config);
-        console.log('store updated!');
       });
     }
   }
 } else {
-  let useModules = require('./modules');
-  createStore = (context) => internalCreateStore(useModules, context)
+  const useModules = require('./modules');
+  createStore = context => internalCreateStore(useModules, context);
 }
+/* eslint-enable global-require */
