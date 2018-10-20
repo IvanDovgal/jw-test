@@ -63,3 +63,6 @@ typings/
 # webpack dist
 dist/
 jest_rs/
+babel_cache/
+.idea/
+workspace.xml
