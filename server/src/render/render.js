@@ -1,3 +1,4 @@
+/* globals  ADDITIONAL_META */
 import { createRenderer } from 'vue-server-renderer';
 import template from './index.template.html';
 import { createApp } from '../../../src';
@@ -12,7 +13,9 @@ export default async function (req, res) {
       url: req.url,
     });
     const html = await renderer.renderToString(app, {
-      title: 'Test', state: store.state,
+      staticMeta: ADDITIONAL_META,
+      title: 'Test',
+      state: store.state,
     });
     res.send(html);
   } catch (e) {

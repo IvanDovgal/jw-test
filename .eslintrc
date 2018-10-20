@@ -1,4 +1,10 @@
 {
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": 8,
+    "sourceType": "module"
+  },
   "extends": [
     "airbnb",
     "plugin:vue/essential"
@@ -11,6 +17,8 @@
     "shared-node-browser": true
   },
   "globals": {
-    "ENV": true
+    "ENV": true,
+    "ENV_SERVER": true,
+    "ENV_CLIENT": true
   }
 }
