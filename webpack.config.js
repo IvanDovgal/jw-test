@@ -82,7 +82,11 @@ const clientConfig = {
           test: /\.css$/,
           use: [
             'vue-style-loader',
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: { importLoaders: 1 },
+            },
+            'postcss-loader',
           ],
         }
         : {
@@ -156,7 +160,11 @@ const serverConfig = {
         test: /\.css$/,
         use: [
           mode === 'production' ? MiniCssExtractPlugin.loader : 'vue-style-loader',
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 1 },
+          },
+          'postcss-loader',
         ],
       },
     ],
