@@ -19,10 +19,11 @@ export default async function (req, res) {
     });
     res.send(html);
   } catch (e) {
-    if (e.code !== 404) {
-      res.send(template);
-      return;
-    }
-    res.status(404).send('Not found!');
+    if (e.code === 404) {
+      res.status(404).send('Not found!');
+    } else
+    if (e.code === 301 || e.code === 302) {
+      res.status(e.code).header('Location', e.location).send('');
+    } else res.status(e.code).send(template);
   }
 }
