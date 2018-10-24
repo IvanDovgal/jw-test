@@ -13,15 +13,18 @@ function getScrollEventTarget(element) {
   return window;
 }
 
+const DEFAULT_THRESHOLD = 700;
+
 export default Vue.directive('load-more', {
 
-  inserted(el, { value }, vnode) {
+  inserted(el, { value, arg }, vnode) {
     const scrollEventTarget = getScrollEventTarget(el);
     vnode.scrollEventTarget = scrollEventTarget;
     vnode.eventHandler = debounce(value, 100);
     vnode.handleScroll = (event) => {
       const target = event.target === document ? document.documentElement : event.target;
-      const needLoad = (target.scrollTop + target.clientHeight + 300) >= target.offsetHeight;
+      const threshold = Number(arg || DEFAULT_THRESHOLD);
+      const needLoad = (target.scrollTop + target.clientHeight + threshold) >= target.offsetHeight;
       if (needLoad) {
         vnode.eventHandler();
       }
