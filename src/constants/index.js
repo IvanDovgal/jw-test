@@ -13,6 +13,7 @@ const API_PATHS = {
 
 const API_PATH = API_PATHS[ENV];
 const API_SERVER = API_SERVERS[ENV];
+const IMAGE_BASE = 'http://my-lib.ru/';
 
 export {
   API_PATHS,
@@ -20,4 +21,5 @@ export {
   API_PATH,
   API_SERVER,
   PROXY_ENTRY,
+  IMAGE_BASE,
 };

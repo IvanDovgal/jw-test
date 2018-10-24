@@ -5,7 +5,8 @@ function view(name) {
 }
 
 const routes = [
-  { path: '/page1', component: view('Page1'), name: 'r2' },
+  { path: '/bookshelf/:user/shelf/:shelf', component: view('Bookshelf'), name: 'user-bookshelf-shelf' },
+  { path: '/bookshelf/:user', component: view('Bookshelf'), name: 'user-bookshelf' },
   { path: '/page2', component: view('Page2'), name: 'r1' },
 ];
 

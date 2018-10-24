@@ -20,9 +20,10 @@ export const mutations = {
       list,
     };
   },
-  failFetchShelvesList(state, { error }) {
+  failFetchShelvesList(state, { user, error }) {
     state.shelves = {
       setOn: ENV,
+      user,
       state: 'fail',
       error,
     };
@@ -44,7 +45,7 @@ export const mutations = {
     state.user = user;
     state.state = 'success';
     state.page = page;
-    state.list.push(data);
+    state.list = state.list.filter(({ page: itemPage }) => itemPage < data.page).concat([data]);
   },
   failFetchBookshelf(state, { user, error }) {
     state.setOn = ENV;
@@ -67,9 +68,11 @@ export const actions = {
     }
   },
 
-  async fetchBookshelf({ commit, dispatch, state }, { user, shelf, page }) {
-    if (isMatch(state, { user, state: 'page-pending' })) return;
-    if (isMatch(state, { user, page, state: 'success' })) return;
+  async fetchBookshelf({ commit, dispatch, state }, { user, shelf, page = 1 }) {
+    if (isMatch(state, { user, shelf, state: 'page-pending' })) return;
+    if (isMatch(state, {
+      user, shelf, page, state: 'success',
+    })) return;
     commit('requestFetchBookshelf', { user, shelf, page });
     try {
       await dispatch('fetchShelves', { user });
