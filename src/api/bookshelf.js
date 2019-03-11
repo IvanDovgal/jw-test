@@ -14,12 +14,15 @@ const api = {
     });
     return response.data;
   },
-  async fetchBookshelf({ user, page, shelf }) {
+  async fetchBookshelf({
+    user, page, shelf, order,
+  }) {
     const response = await httpClient.get('/api/userbooks/', {
       params: {
         user,
         bookshelf: shelf,
         page,
+        o: order,
       },
     });
     return response.data;

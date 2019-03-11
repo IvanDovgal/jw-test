@@ -28,7 +28,9 @@ export const mutations = {
       error,
     };
   },
-  requestFetchBookshelf(state, { user, shelf, page }) {
+  requestFetchBookshelf(state, {
+    user, shelf, page, order,
+  }) {
     this.state.setOn = ENV;
     if (isMatch(state, { user, shelf })) {
       if (isMatch(state, { page })) return;
@@ -36,19 +38,24 @@ export const mutations = {
     } else {
       state.state = 'pending';
     }
+    state.order = order;
     state.shelf = shelf;
     state.page = page;
     state.user = user;
   },
-  successFetchBookshelf(state, { user, data, page }) {
+  successFetchBookshelf(state, {
+    user, data, page, order,
+  }) {
     state.setOn = ENV;
+    state.order = order;
     state.user = user;
     state.state = 'success';
     state.page = page;
     state.list = state.list.filter(({ page: itemPage }) => itemPage < data.page).concat([data]);
   },
-  failFetchBookshelf(state, { user, error }) {
+  failFetchBookshelf(state, { user, error, order }) {
     state.setOn = ENV;
+    state.order = order;
     state.user = user;
     state.state = 'fail';
     state.error = error;
@@ -68,19 +75,32 @@ export const actions = {
     }
   },
 
-  async fetchBookshelf({ commit, dispatch, state }, { user, shelf, page = 1 }) {
-    if (isMatch(state, { user, shelf, state: 'page-pending' })) return;
+  async fetchBookshelf({ commit, dispatch, state }, {
+    user,
+    shelf,
+    order = 'created',
+    page = 1,
+  }) {
     if (isMatch(state, {
-      user, shelf, page, state: 'success',
+      user, shelf, order, state: 'page-pending',
     })) return;
-    commit('requestFetchBookshelf', { user, shelf, page });
+    if (isMatch(state, {
+      user, shelf, order, page, state: 'success',
+    })) return;
+    commit('requestFetchBookshelf', {
+      user, shelf, page, order,
+    });
     try {
       await dispatch('fetchShelves', { user });
       const fetchShelf = shelf || state.shelves.list[0].id;
-      const data = await bookshelfApi.fetchBookshelf({ user, shelf: fetchShelf, page });
-      commit('successFetchBookshelf', { page, data, user });
+      const data = await bookshelfApi.fetchBookshelf({
+        user, shelf: fetchShelf, page, order,
+      });
+      commit('successFetchBookshelf', {
+        page, data, user, order,
+      });
     } catch (error) {
-      commit('failFetchBookshelf', { user, error });
+      commit('failFetchBookshelf', { user, error, order });
     }
   },
 
@@ -116,6 +136,7 @@ export default function bookshelf(state = {
     error: null,
     list: [],
   },
+  order: 'created',
   shelf: null,
   page: 0,
   setOn: ENV,
